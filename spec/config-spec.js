@@ -1,4 +1,4 @@
-describe('Config', () => {
+fdescribe('Config', () => {
   let savedSettings;
 
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('Config', () => {
     };
   });
 
-  describe('.get(keyPath, {scope, sources, excludeSources})', () => {
+  fdescribe('.get(keyPath, {scope, sources, excludeSources})', () => {
     it("allows a key path's value to be read", () => {
       expect(atom.config.set('foo.bar.baz', 42)).toBe(true);
       expect(atom.config.get('foo.bar.baz')).toBe(42);
@@ -40,7 +40,7 @@ describe('Config', () => {
       expect(atom.config.get('bar.baz')).toEqual({ a: 3 });
     });
 
-    describe("when a 'sources' option is specified", () =>
+    fdescribe("when a 'sources' option is specified", () =>
       it('only retrieves values from the specified sources', () => {
         atom.config.set('x.y', 1, { scopeSelector: '.foo', source: 'a' });
         atom.config.set('x.y', 2, { scopeSelector: '.foo', source: 'b' });
@@ -66,7 +66,7 @@ describe('Config', () => {
         ).toBe(1);
       }));
 
-    describe("when an 'excludeSources' option is specified", () =>
+    fdescribe("when an 'excludeSources' option is specified", () =>
       it('only retrieves values from the specified sources', () => {
         atom.config.set('x.y', 0);
         atom.config.set('x.y', 1, { scopeSelector: '.foo', source: 'a' });
@@ -105,7 +105,7 @@ describe('Config', () => {
         ).toBe(4);
       }));
 
-    describe("when a 'scope' option is given", () => {
+    fdescribe("when a 'scope' option is given", () => {
       it('returns the property with the most specific scope selector', () => {
         atom.config.set('foo.bar.baz', 42, {
           scopeSelector: '.source.coffee .string.quoted.double.coffee'
@@ -155,7 +155,7 @@ describe('Config', () => {
         ).toBe(22);
       });
 
-      describe('when there are global defaults', () =>
+      fdescribe('when there are global defaults', () =>
         it('falls back to the global when there is no scoped property specified', () => {
           atom.config.setDefaults('foo', { hasDefault: 'ok' });
           expect(
@@ -165,7 +165,7 @@ describe('Config', () => {
           ).toBe('ok');
         }));
 
-      describe('when package settings are added after user settings', () =>
+      fdescribe('when package settings are added after user settings', () =>
         it("returns the user's setting because the user's setting has higher priority", () => {
           atom.config.set('foo.bar.baz', 100, {
             scopeSelector: '.source.coffee'
@@ -181,7 +181,7 @@ describe('Config', () => {
     });
   });
 
-  describe('.getAll(keyPath, {scope, sources, excludeSources})', () => {
+  fdescribe('.getAll(keyPath, {scope, sources, excludeSources})', () => {
     it('reads all of the values for a given key-path', () => {
       expect(atom.config.set('foo', 41)).toBe(true);
       expect(atom.config.set('foo', 43, { scopeSelector: '.a .b' })).toBe(true);
@@ -210,7 +210,7 @@ describe('Config', () => {
     });
   });
 
-  describe('.set(keyPath, value, {source, scopeSelector})', () => {
+  fdescribe('.set(keyPath, value, {source, scopeSelector})', () => {
     it("allows a key path's value to be written", () => {
       expect(atom.config.set('foo.bar.baz', 42)).toBe(true);
       expect(atom.config.get('foo.bar.baz')).toBe(42);
@@ -241,7 +241,7 @@ describe('Config', () => {
       ).toThrow();
     });
 
-    describe('when the key-path is null', () =>
+    fdescribe('when the key-path is null', () =>
       it('sets the root object', () => {
         expect(atom.config.set(null, { editor: { tabLength: 6 } })).toBe(true);
         expect(atom.config.get('editor.tabLength')).toBe(6);
@@ -255,7 +255,7 @@ describe('Config', () => {
         ).toBe(8);
       }));
 
-    describe('when the value equals the default value', () =>
+    fdescribe('when the value equals the default value', () =>
       it("does not store the value in the user's config", () => {
         atom.config.setSchema('foo', {
           type: 'object',
@@ -312,7 +312,7 @@ describe('Config', () => {
         ).toBeUndefined();
       }));
 
-    describe("when a 'scopeSelector' is given", () =>
+    fdescribe("when a 'scopeSelector' is given", () =>
       it('sets the value and overrides the others', () => {
         atom.config.set('foo.bar.baz', 42, {
           scopeSelector: '.source.coffee .string.quoted.double.coffee'
@@ -341,7 +341,7 @@ describe('Config', () => {
       }));
   });
 
-  describe('.unset(keyPath, {source, scopeSelector})', () => {
+  fdescribe('.unset(keyPath, {source, scopeSelector})', () => {
     beforeEach(() =>
       atom.config.setSchema('foo', {
         type: 'object',
@@ -390,8 +390,8 @@ describe('Config', () => {
       expect(savedSettings.length).toBe(1);
     });
 
-    describe("when no 'scopeSelector' is given", () => {
-      describe("when a 'source' but no key-path is given", () =>
+    fdescribe("when no 'scopeSelector' is given", () => {
+      fdescribe("when a 'source' but no key-path is given", () =>
         it('removes all scoped settings with the given source', () => {
           atom.config.set('foo.bar.baz', 1, {
             scopeSelector: '.a',
@@ -413,7 +413,7 @@ describe('Config', () => {
           });
         }));
 
-      describe("when a 'source' and a key-path is given", () =>
+      fdescribe("when a 'source' and a key-path is given", () =>
         it('removes all scoped settings with the given source and key-path', () => {
           atom.config.set('foo.bar.baz', 1);
           atom.config.set('foo.bar.baz', 2, {
@@ -435,7 +435,7 @@ describe('Config', () => {
           expect(atom.config.get('foo.bar.baz')).toEqual(1);
         }));
 
-      describe("when no 'source' is given", () =>
+      fdescribe("when no 'source' is given", () =>
         it('removes all scoped and unscoped properties for that key-path', () => {
           atom.config.setDefaults('foo.bar', { baz: 100 });
 
@@ -463,7 +463,7 @@ describe('Config', () => {
         }));
     });
 
-    describe("when a 'scopeSelector' is given", () => {
+    fdescribe("when a 'scopeSelector' is given", () => {
       it('restores the global default when no scoped default set', () => {
         atom.config.setDefaults('foo', { bar: { baz: 10 } });
         atom.config.set('foo.bar.baz', 55, { scopeSelector: '.source.coffee' });
@@ -632,10 +632,10 @@ describe('Config', () => {
     });
   });
 
-  describe('.onDidChange(keyPath, {scope})', () => {
+  fdescribe('.onDidChange(keyPath, {scope})', () => {
     let observeHandler = [];
 
-    describe('when a keyPath is specified', () => {
+    fdescribe('when a keyPath is specified', () => {
       beforeEach(() => {
         observeHandler = jasmine.createSpy('observeHandler');
         atom.config.set('foo.bar.baz', 'value 1');
@@ -669,7 +669,7 @@ describe('Config', () => {
       });
     });
 
-    describe('when a keyPath is not specified', () => {
+    fdescribe('when a keyPath is not specified', () => {
       beforeEach(() => {
         observeHandler = jasmine.createSpy('observeHandler');
         atom.config.set('foo.bar.baz', 'value 1');
@@ -712,7 +712,7 @@ describe('Config', () => {
       });
     });
 
-    describe("when a 'scope' is given", () =>
+    fdescribe("when a 'scope' is given", () =>
       it('calls the supplied callback when the value at the descriptor/keypath changes', () => {
         const changeSpy = jasmine.createSpy('onDidChange callback');
         atom.config.onDidChange(
@@ -765,7 +765,7 @@ describe('Config', () => {
       }));
   });
 
-  describe('.observe(keyPath, {scope})', () => {
+  fdescribe('.observe(keyPath, {scope})', () => {
     let [observeHandler, observeSubscription] = [];
 
     beforeEach(() => {
@@ -827,7 +827,7 @@ describe('Config', () => {
       expect(bazCatHandler).not.toHaveBeenCalled();
     });
 
-    describe("when a 'scope' is given", () => {
+    fdescribe("when a 'scope' is given", () => {
       let otherHandler = null;
 
       beforeEach(() => {
@@ -901,7 +901,7 @@ describe('Config', () => {
     });
   });
 
-  describe('.transact(callback)', () => {
+  fdescribe('.transact(callback)', () => {
     let changeSpy = null;
 
     beforeEach(() => {
@@ -929,7 +929,7 @@ describe('Config', () => {
     });
   });
 
-  describe('.transactAsync(callback)', () => {
+  fdescribe('.transactAsync(callback)', () => {
     let changeSpy = null;
 
     beforeEach(() => {
@@ -1014,7 +1014,7 @@ describe('Config', () => {
     });
   });
 
-  describe('.getSources()', () => {
+  fdescribe('.getSources()', () => {
     it("returns an array of all of the config's source names", () => {
       expect(atom.config.getSources()).toEqual([]);
 
@@ -1031,7 +1031,7 @@ describe('Config', () => {
     });
   });
 
-  describe('.save()', () => {
+  fdescribe('.save()', () => {
     it('calls the save callback with any non-default properties', () => {
       atom.config.set('a.b.c', 1);
       atom.config.set('a.b.d', 2);
@@ -1072,7 +1072,7 @@ describe('Config', () => {
       expect(foundKeys).toEqual(expectedKeys);
     });
 
-    describe('when scoped settings are defined', () => {
+    fdescribe('when scoped settings are defined', () => {
       it('serializes any explicitly set config settings', () => {
         atom.config.set('foo.bar', 'ruby', { scopeSelector: '.source.ruby' });
         atom.config.set('foo.omg', 'wow', { scopeSelector: '.source.ruby' });
@@ -1102,7 +1102,7 @@ describe('Config', () => {
     });
   });
 
-  describe('.resetUserSettings()', () => {
+  fdescribe('.resetUserSettings()', () => {
     beforeEach(() => {
       atom.config.setSchema('foo', {
         type: 'object',
@@ -1119,7 +1119,7 @@ describe('Config', () => {
       });
     });
 
-    describe('when the config file contains scoped settings', () => {
+    fdescribe('when the config file contains scoped settings', () => {
       it('updates the config data based on the file contents', () => {
         atom.config.resetUserSettings({
           '*': {
@@ -1141,7 +1141,7 @@ describe('Config', () => {
       });
     });
 
-    describe('when the config file does not conform to the schema', () => {
+    fdescribe('when the config file does not conform to the schema', () => {
       it('validates and does not load the incorrect values', () => {
         atom.config.resetUserSettings({
           '*': {
@@ -1180,7 +1180,7 @@ describe('Config', () => {
       expect(observeHandler).toHaveBeenCalledWith('baz');
     });
 
-    describe('when the config file contains values that do not adhere to the schema', () => {
+    fdescribe('when the config file contains values that do not adhere to the schema', () => {
       it('updates the only the settings that have values matching the schema', () => {
         atom.config.resetUserSettings({
           foo: {
@@ -1235,7 +1235,7 @@ describe('Config', () => {
       expect(atom.config.get('foo.bar')).toEqual(['baz', 'quux']);
     });
 
-    describe('when a setting with a default is removed', () => {
+    fdescribe('when a setting with a default is removed', () => {
       it('resets the setting back to the default', () => {
         atom.config.resetUserSettings({
           foo: { bar: ['baz', 'quux'], int: 2 }
@@ -1277,7 +1277,7 @@ describe('Config', () => {
     });
   });
 
-  describe('.pushAtKeyPath(keyPath, value)', () => {
+  fdescribe('.pushAtKeyPath(keyPath, value)', () => {
     it('pushes the given value to the array at the key path and updates observers', () => {
       atom.config.set('foo.bar.baz', ['a']);
       const observeHandler = jasmine.createSpy('observeHandler');
@@ -1292,7 +1292,7 @@ describe('Config', () => {
     });
   });
 
-  describe('.unshiftAtKeyPath(keyPath, value)', () => {
+  fdescribe('.unshiftAtKeyPath(keyPath, value)', () => {
     it('unshifts the given value to the array at the key path and updates observers', () => {
       atom.config.set('foo.bar.baz', ['b']);
       const observeHandler = jasmine.createSpy('observeHandler');
@@ -1307,7 +1307,7 @@ describe('Config', () => {
     });
   });
 
-  describe('.removeAtKeyPath(keyPath, value)', () => {
+  fdescribe('.removeAtKeyPath(keyPath, value)', () => {
     it('removes the given value from the array at the key path and updates observers', () => {
       atom.config.set('foo.bar.baz', ['a', 'b', 'c']);
       const observeHandler = jasmine.createSpy('observeHandler');
@@ -1325,7 +1325,7 @@ describe('Config', () => {
     });
   });
 
-  describe('.setDefaults(keyPath, defaults)', () => {
+  fdescribe('.setDefaults(keyPath, defaults)', () => {
     it('assigns any previously-unassigned keys to the object at the key path', () => {
       atom.config.set('foo.bar.baz', { a: 1 });
       atom.config.setDefaults('foo.bar.baz', { a: 2, b: 3, c: 4 });
@@ -1347,7 +1347,7 @@ describe('Config', () => {
     });
   });
 
-  describe('.setSchema(keyPath, schema)', () => {
+  fdescribe('.setSchema(keyPath, schema)', () => {
     it('creates a properly nested schema', () => {
       const schema = {
         type: 'object',
@@ -1507,7 +1507,7 @@ describe('Config', () => {
       ).toBe('ok');
     });
 
-    describe('when a schema is added after config values have been set', () => {
+    fdescribe('when a schema is added after config values have been set', () => {
       let schema = null;
       beforeEach(() => {
         schema = {
@@ -1617,7 +1617,7 @@ describe('Config', () => {
       });
     });
 
-    describe('when the value has an "integer" type', () => {
+    fdescribe('when the value has an "integer" type', () => {
       beforeEach(() => {
         const schema = {
           type: 'integer',
@@ -1649,7 +1649,7 @@ describe('Config', () => {
         expect(atom.config.get('foo.bar.anInt')).toBe(12);
       });
 
-      describe('when the minimum and maximum keys are used', () => {
+      fdescribe('when the minimum and maximum keys are used', () => {
         beforeEach(() => {
           const schema = {
             type: 'integer',
@@ -1670,7 +1670,7 @@ describe('Config', () => {
       });
     });
 
-    describe('when the value has an "integer" and "string" type', () => {
+    fdescribe('when the value has an "integer" and "string" type', () => {
       beforeEach(() => {
         const schema = {
           type: ['integer', 'string'],
@@ -1688,7 +1688,7 @@ describe('Config', () => {
       });
     });
 
-    describe('when the value has an "string" and "boolean" type', () => {
+    fdescribe('when the value has an "string" and "boolean" type', () => {
       beforeEach(() => {
         const schema = {
           type: ['string', 'boolean'],
@@ -1709,7 +1709,7 @@ describe('Config', () => {
       });
     });
 
-    describe('when the value has a "number" type', () => {
+    fdescribe('when the value has a "number" type', () => {
       beforeEach(() => {
         const schema = {
           type: 'number',
@@ -1731,7 +1731,7 @@ describe('Config', () => {
         expect(atom.config.get('foo.bar.aFloat')).toBe(12.1);
       });
 
-      describe('when the minimum and maximum keys are used', () => {
+      fdescribe('when the minimum and maximum keys are used', () => {
         beforeEach(() => {
           const schema = {
             type: 'number',
@@ -1752,7 +1752,7 @@ describe('Config', () => {
       });
     });
 
-    describe('when the value has a "boolean" type', () => {
+    fdescribe('when the value has a "boolean" type', () => {
       beforeEach(() => {
         const schema = {
           type: 'boolean',
@@ -1789,7 +1789,7 @@ describe('Config', () => {
       });
     });
 
-    describe('when the value has an "string" type', () => {
+    fdescribe('when the value has an "string" type', () => {
       beforeEach(() => {
         const schema = {
           type: 'string',
@@ -1827,7 +1827,7 @@ describe('Config', () => {
         expect(atom.config.get('foo.bar.aString')).toBe('ok');
       });
 
-      describe('when the schema has a "maximumLength" key', () =>
+      fdescribe('when the schema has a "maximumLength" key', () =>
         it('trims the string to be no longer than the specified maximum', () => {
           const schema = {
             type: 'string',
@@ -1840,7 +1840,7 @@ describe('Config', () => {
         }));
     });
 
-    describe('when the value has an "object" type', () => {
+    fdescribe('when the value has an "object" type', () => {
       beforeEach(() => {
         const schema = {
           type: 'object',
@@ -1893,7 +1893,7 @@ describe('Config', () => {
         );
       });
 
-      describe('when the value has additionalProperties set to false', () =>
+      fdescribe('when the value has additionalProperties set to false', () =>
         it('does not allow other properties to be set on the object', () => {
           atom.config.setSchema('foo.bar', {
             type: 'object',
@@ -1918,7 +1918,7 @@ describe('Config', () => {
           expect(atom.config.get('foo.bar.somethingElse')).toBeUndefined();
         }));
 
-      describe('when the value has an additionalProperties schema', () =>
+      fdescribe('when the value has an additionalProperties schema', () =>
         it('validates properties of the object against that schema', () => {
           atom.config.setSchema('foo.bar', {
             type: 'object',
@@ -1950,7 +1950,7 @@ describe('Config', () => {
         }));
     });
 
-    describe('when the value has an "array" type', () => {
+    fdescribe('when the value has an "array" type', () => {
       beforeEach(() => {
         const schema = {
           type: 'array',
@@ -1974,7 +1974,7 @@ describe('Config', () => {
       });
     });
 
-    describe('when the value has a "color" type', () => {
+    fdescribe('when the value has a "color" type', () => {
       beforeEach(() => {
         const schema = {
           type: 'color',
@@ -2019,7 +2019,7 @@ describe('Config', () => {
         expect(color.toRGBAString()).toBe('rgba(11, 11, 124, 1)');
       });
 
-      it('coerces various types to a color object', () => {
+      fit('coerces various types to a color object', () => {
         atom.config.set('foo.bar.aColor', 'red');
         expect(atom.config.get('foo.bar.aColor')).toEqual({
           red: 255,
@@ -2123,14 +2123,6 @@ describe('Config', () => {
           alpha: 1
         });
 
-        atom.config.set('foo.bar.aColor', 'nope');
-        expect(atom.config.get('foo.bar.aColor')).toEqual({
-          red: 255,
-          green: 255,
-          blue: 255,
-          alpha: 1
-        });
-
         atom.config.set('foo.bar.aColor', 30);
         expect(atom.config.get('foo.bar.aColor')).toEqual({
           red: 255,
@@ -2158,7 +2150,7 @@ describe('Config', () => {
       });
     });
 
-    describe('when the `enum` key is used', () => {
+    fdescribe('when the `enum` key is used', () => {
       beforeEach(() => {
         const schema = {
           type: 'object',
@@ -2233,7 +2225,7 @@ describe('Config', () => {
     });
   });
 
-  describe('when .set/.unset is called prior to .resetUserSettings', () => {
+  fdescribe('when .set/.unset is called prior to .resetUserSettings', () => {
     beforeEach(() => {
       atom.config.settingsLoaded = false;
     });
@@ -2268,17 +2260,17 @@ describe('Config', () => {
     });
   });
 
-  describe('project specific settings', () => {
-    describe('config.resetProjectSettings', () => {
+  fdescribe('project specific settings', () => {
+    fdescribe('config.resetProjectSettings', () => {
       it('gracefully handles invalid config objects', () => {
         atom.config.resetProjectSettings({});
         expect(atom.config.get('foo.bar')).toBeUndefined();
       });
     });
 
-    describe('config.get', () => {
+    fdescribe('config.get', () => {
       const dummyPath = '/Users/dummy/path.json';
-      describe('project settings', () => {
+      fdescribe('project settings', () => {
         it('returns a deep clone of the property value', () => {
           atom.config.resetProjectSettings(
             { '*': { value: { array: [1, { b: 2 }, 3] } } },
@@ -2361,7 +2353,7 @@ describe('Config', () => {
       });
     });
 
-    describe('config.getAll', () => {
+    fdescribe('config.getAll', () => {
       const dummyPath = '/Users/dummy/path.json';
       it('gets settings in the same way .get would return them', () => {
         atom.config.resetProjectSettings({ '*': { a: 'b' } }, dummyPath);

@@ -18,7 +18,13 @@ module.exports = class Color {
         if (Array.isArray(value)) {
           return null;
         }
-        value = value.toRGBAString();
+
+        if (value instanceof Color) {
+          value = value.toRGBAString();
+        } else if (typeof value === 'object') {
+          value = new Color(Object.values(value)).toRGBAString();
+        }
+
         break;
       default:
         return null;
@@ -29,8 +35,9 @@ module.exports = class Color {
     }
 
     try {
-      var parsedColor = ParsedColor(value);
+      var parsedColor = new ParsedColor(value);
     } catch (error) {
+      console.log(error);
       return null;
     }
 
